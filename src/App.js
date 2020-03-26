@@ -9,29 +9,34 @@ constructor(props){
     gameresult:'',
     sum:'valigod',
     id:'',
-    isLoading: false
+    isLoading: false,
+    tierRes:''
   }
 }
 
-callAPI=()=> {
+callAPI=async()=> {
   this.setState({ isLoading: true });
-  fetch("http://localhost:9000/users/"+this.state.sum)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({ apiResponse: res })
-        fetch("http://localhost:9000/users/game/"+res.id)
-         .then(res => res.json()) .then(res => {
-          this.setState({gameresult: res })
-        })
+
+let res =await fetch("http://localhost:9000/users/"+this.state.sum)
+let test= await res.json();
+this.setState({ apiResponse: test });
+let res3=await fetch("http://localhost:9000/users/rank/"+this.state.apiResponse.id)
+let rank=await res3.json();
+this.state.tierRes=rank;
+let res2=await fetch("http://localhost:9000/users/game/"+res.id)
+let activegame= await res2.json();
+this.setState({gameresult: activegame });
 
 
+this.setState({ isLoading: false })
+        
 
-      })
-      .then(() => this.setState({ isLoading: false }));
-}
+
+      }
+     
 
 componentDidMount(){
-  this.callAPI("valigod");
+  this.callAPI("pistachioo");
 }
 
 handleChange =(e)=>{
@@ -53,6 +58,8 @@ handleChange =(e)=>{
         <h2 className="App-intro">{this.state.apiResponse.name}</h2>
         <h5>LVL : {this.state.apiResponse.summonerLevel}</h5>
         {this.state.gameresult.gameMode? <h5>ACTIVE GAME : {this.state.gameresult.gameMode}</h5>:null}
+        <img src={'./ranked-emblems/Emblem_.png'}/> 
+        <p>{this.state.tierRes.tier}</p>
        </div>}
      
       </header>

@@ -15,7 +15,7 @@
 }
 
 .App-header {
-  background-image: url("https://img7.uhdpixel.com/wp/7s/3/karthus-lol-league-of-legends-s7317.jpg");
+  background-color: rgb(44, 45, 46);
 background-size: cover;
   min-height: 100vh;
   display: flex;
