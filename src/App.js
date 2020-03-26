@@ -16,7 +16,6 @@ constructor(props){
 
 callAPI=async()=> {
   this.setState({ isLoading: true });
-
 let res =await fetch("http://localhost:9000/users/"+this.state.sum)
 let test= await res.json();
 this.setState({ apiResponse: test });
